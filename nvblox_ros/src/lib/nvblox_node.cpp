@@ -239,7 +239,7 @@ void NvbloxNode::subscribeToTopics()
   if (use_color_) {
     // Subscribe to synchronized color + cam_info topics
     const auto color_qos = parseQosString(color_qos_str_);
-    color_sub_.subscribe(this, "color/image", color_qos);
+    color_sub_.subscribe(this, "/color/image_thermal", color_qos);
     color_camera_info_sub_.subscribe(this, "color/camera_info", color_qos);
 
     timesync_color_.reset(
