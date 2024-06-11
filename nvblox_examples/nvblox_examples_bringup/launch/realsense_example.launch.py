@@ -44,7 +44,7 @@ def generate_launch_description():
         'flatten_odometry_to_2d', default_value='False',
         description='Whether to flatten the odometry to 2D (camera only moving on XY-plane).')
     global_frame = LaunchConfiguration('global_frame',
-                                       default='odom')
+                                       default='robot_start')
 
     # Create a shared container to hold composable nodes 
     # for speed ups through intra process communication.
@@ -96,12 +96,19 @@ def generate_launch_description():
         launch_arguments={'config_name': 'realsense_example.rviz',
                           'global_frame': global_frame}.items(),
         condition=IfCondition(LaunchConfiguration('run_rviz')))
+    
+    sensor_fusion = Node(
+        package='sensor_fusion',
+        executable='realsense_thermal_fusion',
+        name='realsense_thermal_fusion'
+    )
 
     return LaunchDescription([
         run_rviz_arg,
         from_bag_arg,
         bag_path_arg,
         flatten_odometry_to_2d_arg,
+        sensor_fusion,
         shared_container,
         realsense_launch,
         vslam_launch,
