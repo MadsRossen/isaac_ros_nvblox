@@ -53,7 +53,34 @@ def generate_launch_description():
             ComposableNode(
                 name='visual_slam_node',
                 package='isaac_ros_visual_slam',
-                plugin='nvidia::isaac_ros::visual_slam::VisualSlamNode'),
+                plugin='nvidia::isaac_ros::visual_slam::VisualSlamNode',
+                parameters=[{
+                    'denoise_input_images': False,
+                    'rectified_images': False,
+                    'enable_debug_mode': False,
+                    'debug_dump_path': '/tmp/cuvslam',
+                    'enable_slam_visualization': True,
+                    'enable_landmarks_view': True,
+                    'enable_observations_view': True,
+                    'enable_imu_fusion': True,
+                    'map_frame': 'map',
+                    'odom_frame': 'odom',
+                    'base_frame': 'camera_link',
+                    'input_imu_frame': '/camera/imu',
+                    'input_imu_frame': 'camera_gyro_optical_frame',
+                    'gyro_noise_density': 0.0006255976670632077,
+                    'gyro_random_walk': 0.000030621563842640896,
+                    'accel_noise_density': 0.00000000019370990877610916,
+                    'accel_random_walk': 0.00000000002856554669214001,
+                    'calibration_frequency': 150.0,
+                    'img_jitter_threshold_ms': 33.00
+                    }],
+                remappings=[('stereo_camera/left/image', 'camera/infra1/image_rect_raw'),
+                    ('stereo_camera/left/camera_info', 'camera/infra1/camera_info'),
+                    ('stereo_camera/right/image', 'camera/infra2/image_rect_raw'),
+                    ('stereo_camera/right/camera_info', 'camera/infra2/camera_info'),
+                    ('visual_slam/imu', 'camera/imu')]
+                ),
 
             # Odom flattener node
             ComposableNode(
@@ -78,16 +105,16 @@ def generate_launch_description():
         ##########################################
 
         # Set general parameters
-        SetParameter(name='enable_debug_mode', value=False),
-        SetParameter(name='debug_dump_path', value='/tmp/cuvslam'),
-        SetParameter(name='enable_slam_visualization', value=True),
-        SetParameter(name='enable_observations_view', value=True),
-        SetParameter(name='enable_landmarks_view', value=True),
-        SetParameter(name='map_frame', value='map'),
-        SetParameter(name='enable_localization_n_mapping', value=False),
-        SetParameter(name='publish_odom_to_base_tf', value=True),
-        SetParameter(name='publish_map_to_odom_tf', value=False),
-        SetParameter(name='invert_odom_to_base_tf', value=True),
+        # SetParameter(name='enable_debug_mode', value=False),
+        # SetParameter(name='debug_dump_path', value='/tmp/cuvslam'),
+        # SetParameter(name='enable_slam_visualization', value=True),
+        # SetParameter(name='enable_observations_view', value=True),
+        # SetParameter(name='enable_landmarks_view', value=True),
+        # SetParameter(name='map_frame', value='map'),
+        # SetParameter(name='enable_localization_n_mapping', value=False),
+        # SetParameter(name='publish_odom_to_base_tf', value=True),
+        # SetParameter(name='publish_map_to_odom_tf', value=False),
+        # SetParameter(name='invert_odom_to_base_tf', value=True),
         # If the odometry flattener is running, the vslam output odom_frame
         # can not be set to the output_odom_frame.
         # In that case, the vslam output odom_frame is first flattened by the
