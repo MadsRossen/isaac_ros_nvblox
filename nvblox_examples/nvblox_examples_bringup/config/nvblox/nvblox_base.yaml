@@ -38,13 +38,13 @@
     maximum_sensor_message_queue_length: 30
     # Map clearing settings
     map_clearing_radius_m: 100.0 # no map clearing if < 0.0
-    map_clearing_frame_id: "base_link"
+    map_clearing_frame_id: "camera_link"
     clear_outside_radius_rate_hz: 1.0
     # QoS settings
     depth_qos: "SYSTEM_DEFAULT"
     color_qos: "SYSTEM_DEFAULT"
     # Rviz visualization
-    slice_visualization_attachment_frame_id: "base_link"
+    slice_visualization_attachment_frame_id: "camera_link"
     slice_visualization_side_length: 50.0
 
     static_mapper:
